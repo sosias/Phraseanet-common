@@ -3,9 +3,9 @@ const _root = __dirname + '/../';
 module.exports = {
 
     // path helpers	
-    _app: 'index',
-    minified: 'index.min.js',
-    dev: 'index.js',
+    _app: 'common',
+    minified: 'common.min.js',
+    dev: 'common.js',
     eslintDir: _root + '.eslintrc',
     distDir: _root + 'dist',
     sourceDir: _root + 'src',

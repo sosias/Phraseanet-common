@@ -1,41 +1,41 @@
+// @TODO enable lints
+/* eslint-disable no-undef*/
 import * as jQuery from 'jquery';
 
-const userModule = (function($){
+
+// @todo import humane
+const userModule = (function ($, humane) {
     function setPref(name, value) {
-        if ($.data['pref_' + name] && $.data['pref_' + name].abort) {
-            $.data['pref_' + name].abort();
-            $.data['pref_' + name] = false;
+        const prefName = `pref_${name}`;
+        if ($.data[prefName] && $.data[prefName].abort) {
+            $.data[prefName].abort();
+            $.data[prefName] = false;
         }
 
-        $.data['pref_' + name] = $.ajax({
-            type: "POST",
-            url: "/user/preferences/",
+        $.data[prefName] = $.ajax({
+            type: 'POST',
+            url: '/user/preferences/',
             data: {
                 prop: name,
-                value: value
+                value
             },
             dataType: 'json',
-            timeout: function () {
-                $.data['pref_' + name] = false;
-            },
-            error: function () {
-                $.data['pref_' + name] = false;
-            },
-            success: function (data) {
+            timeout: $.data[prefName] = false,
+            error: $.data[prefName] = false,
+            success: (data) => {
                 if (data.success) {
                     humane.info(data.message);
-                }
-                else {
+                } else {
                     humane.error(data.message);
                 }
-                $.data['pref_' + name] = false;
+                $.data[prefName] = false;
                 return;
             }
         });
     }
 
-    return {setPref: setPref}
-})(jQuery);
+    return { setPref };
+})(jQuery, humane);
 
 export default userModule;
 

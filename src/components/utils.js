@@ -1,3 +1,8 @@
+// @TODO enable lints
+/* eslint-disable camelcase*/
+/* eslint-disable no-param-reassign*/
+/* eslint-disable one-var*/
+
 const utilsModule = (function () {
 
 
@@ -48,7 +53,7 @@ const utilsModule = (function () {
     }
 
     function _HueToRgb(m1, m2, hue) {
-        var v;
+        let v;
         if (hue < 0) {
             hue += 1;
         } else if (hue > 1) {
@@ -57,8 +62,7 @@ const utilsModule = (function () {
 
         if (6 * hue < 1) {
             v = m1 + (m2 - m1) * hue * 6;
-        }
-        else if (2 * hue < 1) {
+        } else if (2 * hue < 1) {
             v = m2;
         } else if (3 * hue < 2) {
             v = m1 + (m2 - m1) * (2 / 3 - hue) * 6;

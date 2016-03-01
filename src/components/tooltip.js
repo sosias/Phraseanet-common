@@ -1,3 +1,34 @@
+// @TODO enable lints
+/* eslint-disable max-len*/
+/* eslint-disable object-shorthand*/
+/* eslint-disable dot-notation*/
+/* eslint-disable vars-on-top*/
+/* eslint-disable prefer-template*/
+/* eslint-disable prefer-const*/
+/* eslint-disable spaced-comment*/
+/* eslint-disable curly*/
+/* eslint-disable object-curly-spacing*/
+/* eslint-disable spaced-comment*/
+/* eslint-disable prefer-arrow-callback*/
+/* eslint-disable one-var*/
+/* eslint-disable space-in-parens*/
+/* eslint-disable camelcase*/
+/* eslint-disable no-undef*/
+/* eslint-disable quote-props*/
+/* eslint-disable no-shadow*/
+/* eslint-disable no-param-reassign*/
+/* eslint-disable no-unused-expressions*/
+/* eslint-disable no-shadow*/
+/* eslint-disable no-implied-eval*/
+/* eslint-disable brace-style*/
+/* eslint-disable no-unused-vars*/
+/* eslint-disable brace-style*/
+/* eslint-disable no-lonely-if*/
+/* eslint-disable no-inline-comments*/
+/* eslint-disable default-case*/
+/* eslint-disable one-var*/
+/* eslint-disable semi*/
+
 import * as jQuery from 'jquery';
 
 /*
@@ -16,9 +47,17 @@ import * as jQuery from 'jquery';
  */
 
 const tooltipModule = (function ($) {
+    $(document).bind('keydown', function (event) {
+        if ($.tooltip === undefined) return;
+
+        if (event.keyCode === 27 && $.tooltip.blocked === true) {
+            unfixTooltip();
+        }
+    });
+
 
     // the tooltip element
-    var helper = {},
+    let helper = {},
     // the title of the current element, used for restoring
         title,
     // timeout id for delayed tooltips
@@ -43,19 +82,19 @@ const tooltipModule = (function ($) {
             showURL: true,
             outside: true,
             isBrowsable: false,
-            extraClass: "",
+            extraClass: '',
             top: 15,
             left: 15,
-            id: "tooltip"
+            id: 'tooltip'
         },
         block: function () {
             $.tooltip.blocked = !$.tooltip.blocked;
         },
 
         delayAjax: function (a, b, c) {
-            var options_serial = p4.tot_options;
-            var query = p4.tot_query;
-            var datas = {
+            let options_serial = p4.tot_options;
+            let query = p4.tot_query;
+            let datas = {
                 options_serial: options_serial,
                 query: query
             };
@@ -67,7 +106,7 @@ const tooltipModule = (function ($) {
                     title = data;
                     positioning($.tooltip.ajaxEvent);
                 },
-                "error": function () {
+                'error': function () {
                     return;
                 }
             });
@@ -79,19 +118,19 @@ const tooltipModule = (function ($) {
             settings = $.extend({}, $.tooltip.defaults, settings);
             createHelper(settings);
             return this.each(function () {
-                $.data(this, "tooltip", settings);
-                // copy tooltip into its own expando and remove the title
-                this.tooltipText = $(this).attr('title');
-                this.tooltipSrc = $(this).attr('tooltipsrc');
+                    $.data(this, 'tooltip', settings);
+                    // copy tooltip into its own expando and remove the title
+                    this.tooltipText = $(this).attr('title');
+                    this.tooltipSrc = $(this).attr('tooltipsrc');
 
-                this.ajaxLoad = ($.trim(this.tooltipText) === '' && this.tooltipSrc !== '');
-                this.ajaxTimeout;
+                    this.ajaxLoad = ($.trim(this.tooltipText) === '' && this.tooltipSrc !== '');
+                    this.ajaxTimeout;
 
-                this.orEl = $(this);
-                $(this).removeAttr("title");
-                // also remove alt attribute to prevent default tooltip in IE
-                this.alt = "";
-            })
+                    this.orEl = $(this);
+                    $(this).removeAttr('title');
+                    // also remove alt attribute to prevent default tooltip in IE
+                    this.alt = '';
+                })
                 .mouseover(save)
                 .mouseout(hide)
                 .mouseleave(function () {
@@ -109,17 +148,17 @@ const tooltipModule = (function ($) {
         },
         fixPNG: IE ? function () {
             return this.each(function () {
-                var image = $(this).css('backgroundImage');
+                let image = $(this).css('backgroundImage');
                 if (image.match(/^url\(["']?(.*\.png)["']?\)$/i)) {
                     image = RegExp.$1;
                     $(this).css({
                         'backgroundImage': 'none',
                         'filter': "progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src='" + image + "')"
                     }).each(function () {
-                            var position = $(this).css('position');
-                            if (position != 'absolute' && position != 'relative')
-                                $(this).css('position', 'relative');
-                        });
+                        let position = $(this).css('position');
+                        if (position !== 'absolute' && position !== 'relative')
+                            $(this).css('position', 'relative');
+                    });
                 }
             });
         } : function () {
@@ -137,7 +176,7 @@ const tooltipModule = (function ($) {
         },
         hideWhenEmpty: function () {
             return this.each(function () {
-                $(this)[ $(this).html() ? "show" : "hide" ]();
+                $(this)[$(this).html() ? 'show' : 'hide']();
             });
         },
         url: function () {
@@ -151,7 +190,7 @@ const tooltipModule = (function ($) {
             return;
         // create the helper, h3 for title, div for url
         helper.parent = $('<div id="' + settings.id + '"><div class="body"></div></div>')
-            // add to document
+        // add to document
             .appendTo(document.body)
             // hide it at first
             .hide();
@@ -167,7 +206,7 @@ const tooltipModule = (function ($) {
     }
 
     function settings(element) {
-        return $.data(element, "tooltip");
+        return $.data(element, 'tooltip');
     }
 
     // main event handler to start showing tooltips
@@ -199,7 +238,7 @@ const tooltipModule = (function ($) {
 
         event.cancelBubble = true;
 
-        if ($.tooltip.blocked || this == $.tooltip.current || (!this.tooltipText && !this.tooltipSrc && !settings(this).bodyHandler))
+        if ($.tooltip.blocked || this === $.tooltip.current || (!this.tooltipText && !this.tooltipSrc && !settings(this).bodyHandler))
             return;
 
         // save current
@@ -217,7 +256,7 @@ const tooltipModule = (function ($) {
         helper.parent.addClass(settings(this).extraClass);
         if (this.ajaxLoad) {
             clearTimeout($.tooltip.ajaxTimeout);
-            $.tooltip.ajaxTimeout = setTimeout("$.tooltip.delayAjax()", 300);
+            $.tooltip.ajaxTimeout = setTimeout('$.tooltip.delayAjax()', 300);
             $.tooltip.ajaxEvent = event;
         }
         else {
@@ -239,47 +278,47 @@ const tooltipModule = (function ($) {
     function positioning(event) {
         helper.body.html(title);
         helper.body.show();
-        var $this = $.tooltip.current;
-        var tooltipSettings = settings($this) ? settings($this) : {};
-        var fixedPosition = tooltipSettings.fixable ? tooltipSettings.fixable : false;
+        let $this = $.tooltip.current;
+        let tooltipSettings = settings($this) ? settings($this) : {};
+        let fixedPosition = tooltipSettings.fixable ? tooltipSettings.fixable : false;
         // fix PNG background for IE
         if (tooltipSettings.fixPNG)
             helper.parent.fixPNG();
         if (tooltipSettings.outside) {
-            var width = 'auto';
-            var height = 'auto';
-            var tooltipId = tooltipSettings.id;
-            var $defaultTips = $('#' + tooltipId);
-            var $audioTips = $('#' + tooltipId + ' .audioTips');
-            var $imgTips = $('#' + tooltipId + ' .imgTips');
-            var $videoTips = $('#' + tooltipId + ' .videoTips');
-            var $documentTips = $('#' + tooltipId + ' .documentTips');
-            var shouldResize = $('#' + tooltipId + ' .noToolTipResize').length === 0 ? true : false;
+            let width = 'auto';
+            let height = 'auto';
+            let tooltipId = tooltipSettings.id;
+            let $defaultTips = $('#' + tooltipId);
+            let $audioTips = $('#' + tooltipId + ' .audioTips');
+            let $imgTips = $('#' + tooltipId + ' .imgTips');
+            let $videoTips = $('#' + tooltipId + ' .videoTips');
+            let $documentTips = $('#' + tooltipId + ' .documentTips');
+            let shouldResize = $('#' + tooltipId + ' .noToolTipResize').length === 0 ? true : false;
 
             // get image or video original dimensions
-            var recordWidth = 260;
-            var recordHeight = 0;
-            var tooltipVerticalOffset = 75;
-            var tooltipHorizontalOffset = 35;
-            var maxWidthAllowed = 1024;
-            var maxHeightAllowed = 768;
-            var tooltipWidth = 0;
-            var tooltipHeight = 0;
-            var viewportDimensions = viewport();
-            var left = 0;
-            var top = 0;
-            var recordWidthOffset = 0;
-            var recordHeightOffset = 0;
-            var topOffset = 0;
-            var leftOffset = 0;
-            var rightOffset = 0;
-            var bottomOffset = 0;
+            let recordWidth = 260;
+            let recordHeight = 0;
+            let tooltipVerticalOffset = 75;
+            let tooltipHorizontalOffset = 35;
+            let maxWidthAllowed = 1024;
+            let maxHeightAllowed = 768;
+            let tooltipWidth = 0;
+            let tooltipHeight = 0;
+            let viewportDimensions = viewport();
+            let left = 0;
+            let top = 0;
+            let recordWidthOffset = 0;
+            let recordHeightOffset = 0;
+            let topOffset = 0;
+            let leftOffset = 0;
+            let rightOffset = 0;
+            let bottomOffset = 0;
 
-            var $selector = $defaultTips;
+            let $selector = $defaultTips;
 
             if ($imgTips[0] && shouldResize) {
-                recordWidth = parseInt($imgTips[0].style.width);
-                recordHeight = parseInt($imgTips[0].style.height);
+                recordWidth = parseInt($imgTips[0].style.width, 10);
+                recordHeight = parseInt($imgTips[0].style.height, 10);
                 $imgTips.css({display: 'block', margin: '0 auto'});
                 $selector = $imgTips;
             }
@@ -303,7 +342,7 @@ const tooltipModule = (function ($) {
                 recordHeight = $videoTips.data('original-height');
                 // limit video to maxWidth:
                 /*if( recordWidth > 720 ) {
-                 var limitRatio = recordWidth/recordHeight;
+                 let limitRatio = recordWidth/recordHeight;
                  recordWidth = 720;
                  recordHeight = recordWidth / limitRatio;
                  }*/
@@ -312,7 +351,7 @@ const tooltipModule = (function ($) {
             }
             else {
                 // handle captions
-                var contentHeight = $selector.get(0).offsetHeight;
+                let contentHeight = $selector.get(0).offsetHeight;
                 shouldResize = false;
                 tooltipVerticalOffset = 13;
                 recordHeight = contentHeight > maxHeightAllowed ? maxHeightAllowed : contentHeight;
@@ -322,10 +361,10 @@ const tooltipModule = (function ($) {
             tooltipWidth = recordWidth + tooltipHorizontalOffset;
             tooltipHeight = recordHeight + tooltipVerticalOffset;
 
-            var rescale = function (containerWidth, containerHeight, resourceWidth, resourceHeight, maxWidthAllowed, maxHeightAllowed, $selector) {
-                var resourceRatio = resourceHeight / resourceWidth;
-                var resizeW = resourceWidth;
-                var resizeH = resourceHeight;
+            let rescale = function (containerWidth, containerHeight, resourceWidth, resourceHeight, maxWidthAllowed, maxHeightAllowed, $selector) {
+                let resourceRatio = resourceHeight / resourceWidth;
+                let resizeW = resourceWidth;
+                let resizeH = resourceHeight;
 
                 if (resourceWidth > resourceHeight) {
                     // if width still too large:
@@ -347,11 +386,11 @@ const tooltipModule = (function ($) {
 
                 if (maxWidthAllowed !== undefined && maxHeightAllowed !== undefined) {
                     if (resizeW > maxWidthAllowed || resizeH > maxHeightAllowed) {
-                        return rescale(maxWidthAllowed, maxHeightAllowed, resourceWidth, resourceHeight)
+                        return rescale(maxWidthAllowed, maxHeightAllowed, resourceWidth, resourceHeight);
                     }
                 }
 
-                if( $selector !== undefined) {
+                if ($selector !== undefined) {
                     $selector.css({width: Math.floor(resizeW), height: Math.floor(resizeH)});
                 }
 
@@ -361,12 +400,12 @@ const tooltipModule = (function ($) {
 
             if (event) {
 
-                var $origEventTarget = $(event.target);
+                let $origEventTarget = $(event.target);
 
                 // previewTips
 
                 // since event target can have different positionning, try to get common closest parent:
-                var $eventTarget = $origEventTarget.closest('.diapo');
+                let $eventTarget = $origEventTarget.closest('.diapo');
 
                 if ($eventTarget.length > 0) {
                     // tooltip from records answer
@@ -386,20 +425,20 @@ const tooltipModule = (function ($) {
                     $eventTarget = $origEventTarget;
                 }
 
-                var recordPosition = $eventTarget.offset();
+                let recordPosition = $eventTarget.offset();
 
-                var totalViewportWidth = viewportDimensions.x;
-                var totalViewportHeight = viewportDimensions.y;
+                let totalViewportWidth = viewportDimensions.x;
+                let totalViewportHeight = viewportDimensions.y;
 
-                var leftAvailableSpace = recordPosition.left + leftOffset;
-                var topAvailableSpace = recordPosition.top + topOffset;
-                var rightAvailableSpace = (totalViewportWidth - leftAvailableSpace - recordWidthOffset) - rightOffset;
-                var bottomAvailableSpace = (totalViewportHeight - topAvailableSpace - recordHeightOffset);
+                let leftAvailableSpace = recordPosition.left + leftOffset;
+                let topAvailableSpace = recordPosition.top + topOffset;
+                let rightAvailableSpace = (totalViewportWidth - leftAvailableSpace - recordWidthOffset) - rightOffset;
+                let bottomAvailableSpace = (totalViewportHeight - topAvailableSpace - recordHeightOffset);
 
-                var shouldBeOnTop = false;
-                var availableHeight = bottomAvailableSpace;
-                var tooltipSize = {width: tooltipWidth, height: tooltipHeight};
-                var position = 'top';
+                let shouldBeOnTop = false;
+                let availableHeight = bottomAvailableSpace;
+                let tooltipSize = {width: tooltipWidth, height: tooltipHeight};
+                let position = 'top';
 
 
                 if (topAvailableSpace > bottomAvailableSpace) {
@@ -468,7 +507,7 @@ const tooltipModule = (function ($) {
 
                     // try to vertical center, relative to source:
                     if (position === 'left' || position === 'right') {
-                        var verticalSpace = topAvailableSpace + (recordHeightOffset / 2) + (tooltipHeight / 2)
+                        let verticalSpace = topAvailableSpace + (recordHeightOffset / 2) + (tooltipHeight / 2);
                         if (verticalSpace < totalViewportHeight) {
                             // tooltip can be aligned vertically
                             top = topAvailableSpace + (recordHeightOffset / 2) - (tooltipHeight / 2);
@@ -482,8 +521,8 @@ const tooltipModule = (function ($) {
                     if (position === 'top' || position === 'bottom') {
                         // push to left
                         // push to right
-                        var takeLeftSpace = (tooltipWidth / 2) + leftAvailableSpace;
-                        var takeRightSpace = (tooltipWidth / 2) + rightAvailableSpace;
+                        let takeLeftSpace = (tooltipWidth / 2) + leftAvailableSpace;
+                        let takeRightSpace = (tooltipWidth / 2) + rightAvailableSpace;
                         // if centering on top or bottom and tooltip is offcanvas
                         if (takeLeftSpace > totalViewportWidth || takeRightSpace > totalViewportWidth) {
 
@@ -502,7 +541,7 @@ const tooltipModule = (function ($) {
                 }
 
 
-                var resizeProperties = {
+                let resizeProperties = {
                     left: left,
                     top: top
                 };
@@ -533,13 +572,13 @@ const tooltipModule = (function ($) {
     // delete timeout and show helper
     function show() {
         tID = null;
-        var isBrowsable = false;
-        if( $.tooltip.current !== null ) {
+        let isBrowsable = false;
+        if ($.tooltip.current !== null) {
             isBrowsable = settings($.tooltip.current).isBrowsable;
         }
 
         if ((!IE || !$.fn.bgiframe) && settings($.tooltip.current).fade) {
-            if (helper.parent.is(":animated"))
+            if (helper.parent.is(':animated'))
                 helper.parent.stop().show().fadeTo(settings($.tooltip.current).fade, 100);
             else
                 helper.parent.is(':visible') ? helper.parent.fadeTo(settings($.tooltip.current).fade, 100) : helper.parent.fadeIn(settings($.tooltip.current).fade);
@@ -550,7 +589,7 @@ const tooltipModule = (function ($) {
         $(helper.parent[0])
             .unbind('mouseenter')
             .unbind('mouseleave')
-            .mouseenter(function(){
+            .mouseenter(function () {
                 if (isBrowsable) {
                     $.tooltip.currentHover = true;
                 }
@@ -574,8 +613,8 @@ const tooltipModule = (function ($) {
         event.cancelBubble = true;
         if (event.stopPropagation)
             event.stopPropagation();
-        commonModule.showOverlay('_tooltip', 'body', unfix_tooltip, settings(this).fixableIndex);
-        $('#tooltip .tooltip_closer').show().bind('click', unfix_tooltip);
+        commonModule.showOverlay('_tooltip', 'body', tooltipModule.unfixTooltip, settings(this).fixableIndex);
+        $('#tooltip .tooltip_closer').show().bind('click', tooltipModule.unfixTooltip);
         $.tooltip.blocked = true;
     }
 
@@ -596,12 +635,12 @@ const tooltipModule = (function ($) {
         if ($.tooltip.blocked)
             return;
 
-        if (event && event.target.tagName == "OPTION") {
+        if (event && event.target.tagName === 'OPTION') {
             return;
         }
 
         // stop updating when tracking is disabled and the tooltip is visible
-        if (!track && helper.parent.is(":visible")) {
+        if (!track && helper.parent.is(':visible')) {
             $(document.body).unbind('mousemove', update);
             $.tooltip.currentHover = true;
         }
@@ -614,18 +653,18 @@ const tooltipModule = (function ($) {
         }
 
         // remove position helper classes
-        helper.parent.removeClass("viewport-right").removeClass("viewport-bottom");
+        helper.parent.removeClass('viewport-right').removeClass('viewport-bottom');
 
         if (!settings($.tooltip.current).outside) {
-            var left = helper.parent[0].offsetLeft;
-            var top = helper.parent[0].offsetTop;
+            let left = helper.parent[0].offsetLeft;
+            let top = helper.parent[0].offsetTop;
             helper.parent.width('auto');
             helper.parent.height('auto');
             if (event) {
                 // position the helper 15 pixel to bottom right, starting from mouse position
                 left = event.pageX + settings($.tooltip.current).left;
                 top = event.pageY + settings($.tooltip.current).top;
-                var right = 'auto';
+                let right = 'auto';
                 if (settings($.tooltip.current).positionLeft) {
                     right = $(window).width() - left;
                     left = 'auto';
@@ -637,21 +676,21 @@ const tooltipModule = (function ($) {
                 });
             }
 
-            var v = viewport(),
+            let v = viewport(),
                 h = helper.parent[0];
             // check horizontal position
             if (v.x + v.cx < h.offsetLeft + h.offsetWidth) {
                 left -= h.offsetWidth + 20 + settings($.tooltip.current).left;
                 helper.parent.css({
                     left: left + 'px'
-                }).addClass("viewport-right");
+                }).addClass('viewport-right');
             }
             // check vertical position
             if (v.y + v.cy < h.offsetTop + h.offsetHeight) {
                 top -= h.offsetHeight + 20 + settings($.tooltip.current).top;
                 helper.parent.css({
                     top: top + 'px'
-                }).addClass("viewport-bottom");
+                }).addClass('viewport-bottom');
             }
         }
     }
@@ -668,11 +707,11 @@ const tooltipModule = (function ($) {
 
     // hide helper and restore added classes and the title
     function hide(event) {
-        var isBrowsable = false;
-        if( $.tooltip.current !== null ) {
+        let isBrowsable = false;
+        if ($.tooltip.current !== null) {
             isBrowsable = settings($.tooltip.current).isBrowsable;
         }
-        if( $.tooltip.currentHover && isBrowsable ) {
+        if ($.tooltip.currentHover && isBrowsable) {
             return;
         }
 
@@ -688,7 +727,7 @@ const tooltipModule = (function ($) {
             clearTimeout(tID);
         // no more current element
         $.tooltip.visible = false;
-        var tsettings = settings($.tooltip.current);
+        let tsettings = settings($.tooltip.current);
         clearTimeout($.tooltip.ajaxTimeout);
         if ($.tooltip.ajaxRequest && $.tooltip.ajaxRequest.abort) {
             $.tooltip.ajaxRequest.abort();
@@ -697,7 +736,7 @@ const tooltipModule = (function ($) {
         helper.body.empty();
         $.tooltip.current = null;
         function complete() {
-            helper.parent.removeClass(tsettings.extraClass).hide().css("opacity", "");
+            helper.parent.removeClass(tsettings.extraClass).hide().css('opacity', '');
         }
 
         if ((!IE || !$.fn.bgiframe) && tsettings.fade) {
@@ -712,24 +751,19 @@ const tooltipModule = (function ($) {
             helper.parent.unfixPNG();
     }
 
+    function unfixTooltip() {
+        $.tooltip.blocked = false;
+        $.tooltip.visible = false;
+        $.tooltip.current = null;
+        $('#tooltip').hide();
+        $('#tooltip .tooltip_closer').hide();
+        commonModule.hideOverlay('_tooltip');
+    }
+
+    return {
+        unfixTooltip
+    }
 })(jQuery);
 
-function unfix_tooltip() {
-    $.tooltip.blocked = false;
-    $.tooltip.visible = false;
-    $.tooltip.current = null;
-    $('#tooltip').hide();
-    $('#tooltip .tooltip_closer').hide();
-    commonModule.hideOverlay('_tooltip');
-}
-
-
-$(document).bind('keydown', function (event) {
-    if( $.tooltip === undefined ) return;
-
-    if (event.keyCode == 27 && $.tooltip.blocked === true) {
-        unfix_tooltip();
-    }
-});
 
 export default tooltipModule;

@@ -1,11 +1,47 @@
+// @TODO enable lints
+/* eslint-disable max-len*/
+/* eslint-disable object-shorthand*/
+/* eslint-disable dot-notation*/
+/* eslint-disable vars-on-top*/
+/* eslint-disable prefer-template*/
+/* eslint-disable prefer-const*/
+/* eslint-disable spaced-comment*/
+/* eslint-disable curly*/
+/* eslint-disable object-curly-spacing*/
+/* eslint-disable spaced-comment*/
+/* eslint-disable prefer-arrow-callback*/
+/* eslint-disable one-var*/
+/* eslint-disable space-in-parens*/
+/* eslint-disable camelcase*/
+/* eslint-disable no-undef*/
+/* eslint-disable quote-props*/
+/* eslint-disable no-shadow*/
+/* eslint-disable no-param-reassign*/
+/* eslint-disable no-unused-expressions*/
+/* eslint-disable no-shadow*/
+/* eslint-disable no-implied-eval*/
+/* eslint-disable brace-style*/
+/* eslint-disable no-unused-vars*/
+/* eslint-disable brace-style*/
+/* eslint-disable no-lonely-if*/
+/* eslint-disable no-inline-comments*/
+/* eslint-disable default-case*/
+/* eslint-disable one-var*/
+/* eslint-disable semi*/
+/* eslint-disable no-throw-literal*/
+/* eslint-disable no-sequences*/
+/* eslint-disable consistent-this*/
+/* eslint-disable no-dupe-keys*/
+/* eslint-disable semi*/
+
 import * as jQuery from 'jquery';
 
-var dialogModule = (function ($) {
-    var $body = null;
-    var bodySize = {};
-    var _dialog = {};
+let dialogModule = (function ($) {
+    let $body = null;
+    let bodySize = {};
+    let _dialog = {};
 
-    $('document').ready(function(){
+    $('document').ready(function () {
         $body = $('body');
 
         $(window).on('resize', function () {
@@ -21,18 +57,18 @@ var dialogModule = (function ($) {
 
     function getLevel(level) {
 
-        level = parseInt(level);
+        level = parseInt(level, 10);
 
         if (isNaN(level) || level < 1) {
             return 1;
         }
 
         return level;
-    };
+    }
 
     function getId(level) {
         return 'DIALOG' + getLevel(level);
-    };
+    }
 
     function _addButtons(buttons, dialog) {
         if (dialog.options.closeButton === true) {
@@ -49,11 +85,11 @@ var dialogModule = (function ($) {
         return buttons;
     }
 
-    var _phraseaDialog = function (options, level) {
+    let _phraseaDialog = function (options, level) {
 
-        var _createDialog = function (level) {
+        let _createDialog = function (level) {
 
-            var $dialog = $('#' + getId(level));
+            let $dialog = $('#' + getId(level));
 
             if ($dialog.length > 0) {
                 throw 'Dialog already exists at this level';
@@ -65,7 +101,7 @@ var dialogModule = (function ($) {
             return $dialog;
         };
 
-        var defaults = {
+        let defaults = {
                 size: 'Medium',
                 buttons: {},
                 loading: true,
@@ -76,12 +112,11 @@ var dialogModule = (function ($) {
                 closeButton: false,
                 cancelButton: false
             },
-            options = typeof options === 'object' ? options : {},
             width,
             height,
             $dialog,
             $this = this;
-
+        options = typeof options === 'object' ? options : {};
         this.closing = false;
 
         this.options = $.extend(defaults, options);
@@ -91,7 +126,7 @@ var dialogModule = (function ($) {
         this.options.buttons = _addButtons(this.options.buttons, this);
 
         if (/\d+x\d+/.test(this.options.size)) {
-            var dimension = this.options.size.split('x');
+            let dimension = this.options.size.split('x');
             height = dimension[1];
             width = dimension[0];
         } else {
@@ -131,7 +166,7 @@ var dialogModule = (function ($) {
         this.$dialog = _createDialog(this.level),
             zIndex = Math.min(this.level * 5000 + 5000, 32767);
 
-        var _closeCallback = function () {
+        let _closeCallback = function () {
             if (typeof $this.options.closeCallback === 'function') {
                 $this.options.closeCallback($this.$dialog);
             }
@@ -157,7 +192,7 @@ var dialogModule = (function ($) {
                 width: width,
                 height: height,
                 open: function () {
-                    $(this).dialog("widget").css("z-index", zIndex);
+                    $(this).dialog('widget').css('z-index', zIndex);
                 },
                 close: _closeCallback
             })
@@ -168,10 +203,10 @@ var dialogModule = (function ($) {
         }
 
         if (this.options.size === 'Full') {
-            var $this = this;
+            let $this = this;
             $(window).unbind('resize.DIALOG' + getLevel(level))
                 .bind('resize.DIALOG' + getLevel(level), function () {
-                    if ($this.$dialog.data("ui-dialog")) {
+                    if ($this.$dialog.data('ui-dialog')) {
                         $this.$dialog.dialog('option', {
                             width: bodySize.x - 30,
                             height: bodySize.y - 30
@@ -194,7 +229,7 @@ var dialogModule = (function ($) {
             return this.$dialog.attr('id');
         },
         load: function (url, method, params) {
-            var $this = this;
+            let $this = this;
             this.loader = {
                 url: url,
                 method: typeof method === 'undefined' ? 'GET' : method,
@@ -230,7 +265,7 @@ var dialogModule = (function ($) {
             return this.$dialog;
         },
         getOption: function (optionName) {
-            if (this.$dialog.data("ui-dialog")) {
+            if (this.$dialog.data('ui-dialog')) {
                 return this.$dialog.dialog('option', optionName);
             }
             return null;
@@ -239,13 +274,13 @@ var dialogModule = (function ($) {
             if (optionName === 'buttons') {
                 optionValue = _addButtons(optionValue, this);
             }
-            if (this.$dialog.data("ui-dialog")) {
+            if (this.$dialog.data('ui-dialog')) {
                 this.$dialog.dialog('option', optionName, optionValue);
             }
         }
     };
 
-    var Dialog = function () {
+    let Dialog = function () {
         this.currentStack = {};
     };
 
@@ -264,7 +299,7 @@ var dialogModule = (function ($) {
         },
         get: function (level) {
 
-            var id = getId(level);
+            let id = getId(level);
 
             if (id in this.currentStack) {
                 return this.currentStack[id];
@@ -277,13 +312,13 @@ var dialogModule = (function ($) {
             $(window).unbind('resize.DIALOG' + getLevel(level));
 
             this.get(level).closing = true;
-            var dialog = this.get(level).getDomElement();
+            let dialog = this.get(level).getDomElement();
             if (dialog.data('ui-dialog')) {
                 dialog.dialog('close').dialog('destroy');
             }
             dialog.remove();
 
-            var id = this.get(level).getId();
+            let id = this.get(level).getId();
 
             if (id in this.currentStack) {
                 delete this.currentStack.id;
@@ -294,7 +329,7 @@ var dialogModule = (function ($) {
     _dialog = new Dialog();
     return {
         dialog: _dialog
-    }
+    };
 
 }(jQuery));
 

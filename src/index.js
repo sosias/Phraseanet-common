@@ -5,4 +5,4 @@ import userModule from './components/user';
 import utilsModule from './components/utils';
 
 
-export {commonModule, utilsModule, userModule, tooltipModule};
+export { dialogModule, commonModule, utilsModule, userModule, tooltipModule };
