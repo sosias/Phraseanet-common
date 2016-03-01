@@ -31,7 +31,7 @@ module.exports = Object.assign({}, webpackConfig, {
         // optimizations
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.NoErrorsPlugin(),
+        // new webpack.NoErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             output: {
                 comments: false

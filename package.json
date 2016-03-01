@@ -28,6 +28,7 @@
     "package:prod": "./node_modules/.bin/ncu -u",
     "package:dev": "./node_modules/.bin/ncu -p -u",
     "asset-server": "node config/webpack/webpack.hot.assets.config",
+    "prepublish": "[[ -z $(git status --porcelain) ]] && npm run production",
     "preversion": "[[ -z $(git status --porcelain) ]] && npm run production && git add -A dist && git commit -m 'Build lib'",
     "postpublish": "git push origin master --follow-tags"
   },
@@ -106,6 +107,7 @@
     "name": "Florian Blouet",
     "email": "florian.blouet@gmail.com"
   },
+  "main": "dist/index.min.js",
   "bugs": "https://github.com/lostdalek/Phraseanet-common/issues",
   "homepage": "https://github.com/lostdalek/Phraseanet-common",
   "license": "MIT",
