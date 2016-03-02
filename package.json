@@ -107,12 +107,15 @@
     "name": "Florian Blouet",
     "email": "florian.blouet@gmail.com"
   },
-  "main": "dist/common.min.js",
+  "main": "dist/common.js",
   "bugs": "https://github.com/lostdalek/Phraseanet-common/issues",
   "homepage": "https://github.com/lostdalek/Phraseanet-common",
   "license": "MIT",
   "dependencies": {
     "es6-promise": "^3.0.2",
-    "jquery": "^1.11.3"
+    "humane-js": "^3.2.2",
+    "imports-loader": "^0.6.5",
+    "jquery": "^1.11.3",
+    "js-cookie": "^2.1.0"
   }
 }

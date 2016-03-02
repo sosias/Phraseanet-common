@@ -34,8 +34,8 @@
 /* eslint-disable no-dupe-keys*/
 /* eslint-disable semi*/
 
-import * as jQuery from 'jquery';
-
+//import * as jQuery from 'jquery';
+let $ = require('jquery');
 let dialogModule = (function ($) {
     let $body = null;
     let bodySize = {};

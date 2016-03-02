@@ -44,13 +44,13 @@ require('babel-core/register');
 
 // Webpack config for development
 /*
-import webpack from 'webpack';
-import path from 'path';
-import pkg from '../../package.json';
-import banner from '../banner';
-import WebpackNotifierPlugin from 'webpack-notifier';
-import config from '../config';
-*/
+ import webpack from 'webpack';
+ import path from 'path';
+ import pkg from '../../package.json';
+ import banner from '../banner';
+ import WebpackNotifierPlugin from 'webpack-notifier';
+ import config from '../config';
+ */
 
 
 const webpack = require('webpack');
@@ -80,20 +80,26 @@ module.exports = {
             exclude: /node_modules/
         }],
         loaders: [{
-            test: /\.js$/,
-            exclude: /node_modules/,
-            include: path.join(__dirname, '../../src'),
-            loader: 'babel-loader'
-        }]
+            test: /[\/\\]src[\/\\]vendors[\/\\]jquery\.contextmenu_custom\.js$/,
+            loader: "imports?define=>false"
+        },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                include: path.join(__dirname, '../../src'),
+                loader: 'babel-loader'
+            }]
     },
     resolve: {
-        extensions: ['', '.js']
+        extensions: ['', '.js'],
+        alias: {
+            'jquery-contextmenu': path.join(__dirname, '../../src/vendors/jquery.contextmenu_custom.js')
+        }
     },
     plugins: [
         new WebpackNotifierPlugin({
             alwaysNotify: true
         }),
-
         new webpack.optimize.OccurenceOrderPlugin(),
         // new webpack.BannerPlugin(banner),
         new webpack.DefinePlugin({
@@ -103,7 +109,8 @@ module.exports = {
         })
     ],
     externals: {
-        jquery: 'jQuery'
+        jquery: 'jQuery',
+        humane: 'humane'
     },
     eslint: {
         configFile: config.eslintDir

@@ -29,8 +29,8 @@
 /* eslint-disable one-var*/
 /* eslint-disable semi*/
 
-import * as jQuery from 'jquery';
-
+// import * as jQuery from 'jquery';
+let $ = require('jquery');
 /*
  * jQuery Tooltip plugin 1.3
  *

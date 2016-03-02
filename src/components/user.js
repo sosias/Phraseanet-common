@@ -1,42 +1,44 @@
 // @TODO enable lints
 /* eslint-disable no-undef*/
-import * as jQuery from 'jquery';
+// import * as jQuery from 'jquery';
+let $ = require('jquery');
+const humane = require('humane-js');
 
+humane.info = humane.spawn({addnCls: 'humane-libnotify-info', timeout: 1000});
+humane.error = humane.spawn({addnCls: 'humane-libnotify-error', timeout: 1000});
+humane.forceNew = true;
 
-// @todo import humane
-const userModule = (function ($, humane) {
-    function setPref(name, value) {
-        const prefName = `pref_${name}`;
-        if ($.data[prefName] && $.data[prefName].abort) {
-            $.data[prefName].abort();
-            $.data[prefName] = false;
-        }
-
-        $.data[prefName] = $.ajax({
-            type: 'POST',
-            url: '/user/preferences/',
-            data: {
-                prop: name,
-                value
-            },
-            dataType: 'json',
-            timeout: $.data[prefName] = false,
-            error: $.data[prefName] = false,
-            success: (data) => {
-                if (data.success) {
-                    humane.info(data.message);
-                } else {
-                    humane.error(data.message);
-                }
-                $.data[prefName] = false;
-                return;
-            }
-        });
+function setPref(name, value) {
+    const prefName = `pref_${name}`;
+    if ($.data[prefName] && $.data[prefName].abort) {
+        $.data[prefName].abort();
+        $.data[prefName] = false;
     }
 
-    return { setPref };
-})(jQuery, humane);
+    return  $.data[prefName] = $.ajax({
+        type: 'POST',
+        url: '/user/preferences/',
+        data: {
+            prop: name,
+            value
+        },
+        dataType: 'json',
+        timeout: $.data[prefName] = false,
+        error: $.data[prefName] = false,
+        success: (data) => {
+            if (data.success) {
+                humane.info(data.message);
+            } else {
+                humane.error(data.message);
+            }
+            $.data[prefName] = false;
+            return data;
+        }
+    });
 
-export default userModule;
+}
+
+
+export default { setPref };
 
 
