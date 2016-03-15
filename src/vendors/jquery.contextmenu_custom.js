@@ -38,6 +38,7 @@
 /* eslint-disable no-var*/
 /* eslint-disable quotes*/
 
+import $ from 'jquery';
 
 /**
  * Copyright (c)2005-2009 Matt Kruse (javascripttoolbox.com)
@@ -66,8 +67,7 @@
  * @todo More themes
  * @todo Nested context menus
  */
-(function ($) {
-    console.log('context menu', $)
+(function () {
     $.contextMenu = {
         // props add by Alchemy
         _showEvent: null,	// the original event the caused the menu to show (useful to find the original element clicked)
@@ -496,4 +496,4 @@
             });
         });
     };
-})(jQuery);
+})();
