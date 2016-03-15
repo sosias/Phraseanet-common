@@ -1,7 +1,6 @@
 // @TODO enable lints
 /* eslint-disable no-undef*/
-// import * as jQuery from 'jquery';
-let $ = require('jquery');
+import $ from 'jquery';
 const humane = require('humane-js');
 
 humane.info = humane.spawn({addnCls: 'humane-libnotify-info', timeout: 1000});
@@ -15,7 +14,7 @@ function setPref(name, value) {
         $.data[prefName] = false;
     }
 
-    return  $.data[prefName] = $.ajax({
+     $.data[prefName] = $.ajax({
         type: 'POST',
         url: '/user/preferences/',
         data: {
@@ -35,10 +34,11 @@ function setPref(name, value) {
             return data;
         }
     });
+    return $.data[prefName];
 
 }
 
 
-export default { setPref };
+export default {setPref};
 
 

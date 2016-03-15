@@ -67,7 +67,7 @@ function addButtons(buttons, dialog) {
     return buttons;
 }
 
-const phraseaDialog = function (services, options, level) {
+const PhraseaDialog = function (services, options, level) {
     const createDialog = function (level) {
 
         let $dialog = $('#' + getId(level));
@@ -202,7 +202,7 @@ const phraseaDialog = function (services, options, level) {
     return this;
 };
 
-phraseaDialog.prototype = {
+PhraseaDialog.prototype = {
     close: function () {
         dialog.close(this.level);
     },
@@ -266,11 +266,11 @@ const Dialog = function () {
 Dialog.prototype = {
     create: function (services, options, level) {
 
-        if (this.get(level) instanceof phraseaDialog) {
+        if (this.get(level) instanceof PhraseaDialog) {
             this.get(level).close();
         }
 
-        let $dialog = new phraseaDialog(services, options, level);
+        let $dialog = new PhraseaDialog(services, options, level);
 
         this.currentStack[$dialog.getId()] = $dialog;
 

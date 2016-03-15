@@ -35,8 +35,7 @@
 /* eslint-disable semi*/
 /* eslint-disable no-loop-func*/
 
-// import * as $ from 'jquery';
-let $ = require('jquery');
+import $ from 'jquery';
 let cookie = require('js-cookie');
 // require('imports?$=jquery!jquery-contextmenu');
 
@@ -47,22 +46,22 @@ const initialize = () => {
 
     // $(document).ready(function () {
 
-        let locale = cookie.get('i18next');
-        if( locale === undefined ) {
-            locale = 'en-GB';
-        }
+    let locale = cookie.get('i18next');
+    if (locale === undefined) {
+        locale = 'en-GB';
+    }
 
-        $('body').on('click', '.infoDialog', function (event) {
-            _infoDialog($(this));
-        });
+    $('body').on('click', '.infoDialog', function (event) {
+        _infoDialog($(this));
+    });
 
-        let cache = $('#mainMenu .helpcontextmenu');
-        $('.context-menu-item', cache).hover(function () {
-            $(this).addClass('context-menu-item-hover');
-        }, function () {
-            $(this).removeClass('context-menu-item-hover');
-        });
-        console.log('help trigger', $('#help-trigger'))
+    let cache = $('#mainMenu .helpcontextmenu');
+    $('.context-menu-item', cache).hover(function () {
+        $(this).addClass('context-menu-item-hover');
+    }, function () {
+        $(this).removeClass('context-menu-item-hover');
+    });
+    console.log('help trigger', $('#help-trigger'))
 
     // });
 };
