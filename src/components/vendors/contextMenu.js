@@ -38,7 +38,6 @@
 /* eslint-disable no-var*/
 /* eslint-disable quotes*/
 
-import $ from 'jquery';
 
 /**
  * Copyright (c)2005-2009 Matt Kruse (javascripttoolbox.com)
@@ -68,7 +67,7 @@ import $ from 'jquery';
  * @todo Nested context menus
  */
 
-( function () {
+(function ($) {
     $.contextMenu = {
         // props add by Alchemy
         _showEvent: null,	// the original event the caused the menu to show (useful to find the original element clicked)
@@ -497,4 +496,4 @@ import $ from 'jquery';
             });
         });
     };
-})();
+})(jQuery);

@@ -29,7 +29,6 @@
 /* eslint-disable one-var*/
 /* eslint-disable semi*/
 
-import $ from 'jquery';
 /*
  * jQuery Tooltip plugin 1.3
  *
@@ -45,7 +44,7 @@ import $ from 'jquery';
  *   http://www.gnu.org/licenses/gpl.html
  */
 
-const tooltipModule = (() => {
+(($) => {
     $(document).bind('keydown', function (event) {
         if ($.tooltip === undefined) return;
 
@@ -758,6 +757,4 @@ const tooltipModule = (() => {
     return {
         unfixTooltip
     }
-})();
-
-export default tooltipModule;
+})(jQuery);
