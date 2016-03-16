@@ -45,7 +45,7 @@ import $ from 'jquery';
  *   http://www.gnu.org/licenses/gpl.html
  */
 
-const tooltipModule = () => {
+const tooltipModule = (() => {
     $(document).bind('keydown', function (event) {
         if ($.tooltip === undefined) return;
 
@@ -91,12 +91,7 @@ const tooltipModule = () => {
         },
 
         delayAjax: function (a, b, c) {
-            let options_serial = p4.tot_options;
-            let query = p4.tot_query;
-            let datas = {
-                options_serial: options_serial,
-                query: query
-            };
+            let datas = {};
             $.tooltip.ajaxRequest = $.ajax({
                 url: $.tooltip.current.tooltipSrc,
                 type: 'post',
@@ -249,13 +244,14 @@ const tooltipModule = () => {
             helper.url.html($(this).url().replace('http://', '')).show();
         else
             helper.url.hide();
-
+        console.log('$(this)', $(this))
         // add an optional class for this tip
         helper.parent.removeClass();
         helper.parent.addClass(settings(this).extraClass);
         if (this.ajaxLoad) {
+            // @TODO debounce instead of timeout
             clearTimeout($.tooltip.ajaxTimeout);
-            $.tooltip.ajaxTimeout = setTimeout('$.tooltip.delayAjax()', 300);
+            $.tooltip.ajaxTimeout = setTimeout($.tooltip.delayAjax, 300);
             $.tooltip.ajaxEvent = event;
         }
         else {
@@ -762,7 +758,6 @@ const tooltipModule = () => {
     return {
         unfixTooltip
     }
-};
-(tooltipModule)();
+})();
 
 export default tooltipModule;

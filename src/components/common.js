@@ -36,10 +36,8 @@
 /* eslint-disable no-loop-func*/
 
 import $ from 'jquery';
+import dialog from './dialog';
 let cookie = require('js-cookie');
-// require('imports?$=jquery!jquery-contextmenu');
-
-let p4 = p4 || {};
 
 const initialize = () => {
     console.log('init common module')
@@ -61,9 +59,6 @@ const initialize = () => {
     }, function () {
         $(this).removeClass('context-menu-item-hover');
     });
-    console.log('help trigger', $('#help-trigger'))
-
-    // });
 };
 
 function _infoDialog(el) {
