@@ -43,7 +43,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  */
-
+import {showOverlay, hideOverlay} from './common';
 (($) => {
     $(document).bind('keydown', function (event) {
         if ($.tooltip === undefined) return;
@@ -606,7 +606,7 @@
         event.cancelBubble = true;
         if (event.stopPropagation)
             event.stopPropagation();
-        commonModule.showOverlay('_tooltip', 'body', tooltipModule.unfixTooltip, settings(this).fixableIndex);
+        showOverlay('_tooltip', 'body', tooltipModule.unfixTooltip, settings(this).fixableIndex);
         $('#tooltip .tooltip_closer').show().bind('click', tooltipModule.unfixTooltip);
         $.tooltip.blocked = true;
     }
@@ -750,7 +750,7 @@
         $.tooltip.current = null;
         $('#tooltip').hide();
         $('#tooltip .tooltip_closer').hide();
-        commonModule.hideOverlay('_tooltip');
+        hideOverlay('_tooltip');
     }
 
     return {
