@@ -55,58 +55,6 @@ const initialize = () => {
     });
 };
 
-function showOverlay(n, appendto, callback, zIndex) {
-
-    let div = 'OVERLAY';
-    if (typeof (n) !== 'undefined')
-        div += n;
-    if ($('#' + div).length === 0) {
-        if (typeof (appendto) === 'undefined')
-            appendto = 'body';
-        $(appendto).append('<div id="' + div + '" style="display:none;">&nbsp;</div>');
-    }
-
-    let css = {
-        display: 'block',
-        opacity: 0,
-        right: 0,
-        bottom: 0,
-        position: 'absolute',
-        top: 0,
-        zIndex: zIndex,
-        left: 0
-    };
-
-    if (parseInt(zIndex, 10) > 0)
-        css['zIndex'] = parseInt(zIndex, 10);
-
-    if (typeof (callback) !== 'function')
-        callback = function () {
-        };
-    $('#' + div).css(css).addClass('overlay').fadeTo(500, 0.7).bind('click', function () {
-        (callback)();
-    });
-    if (( navigator.userAgent.match(/msie/i) && navigator.userAgent.match(/6/) )) {
-        $('select').css({
-            visibility: 'hidden'
-        });
-    }
-}
-
-
-function hideOverlay(n) {
-    if (( navigator.userAgent.match(/msie/i) && navigator.userAgent.match(/6/) )) {
-        $('select').css({
-            visibility: 'visible'
-        });
-    }
-    let div = 'OVERLAY';
-    if (typeof (n) !== 'undefined')
-        div += n;
-    $('#' + div).hide().remove();
-}
-
-
 // @deprecated
 function manageSession(data, showMessages) {
     if (typeof (showMessages) === 'undefined')
@@ -196,7 +144,5 @@ function manageSession(data, showMessages) {
 
 export default {
     initialize,
-    showOverlay,
-    hideOverlay,
     manageSession
 };

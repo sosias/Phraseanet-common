@@ -43,7 +43,6 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  */
-import {showOverlay, hideOverlay} from './common';
 (($) => {
     $(document).bind('keydown', function (event) {
         if ($.tooltip === undefined) return;
@@ -751,6 +750,56 @@ import {showOverlay, hideOverlay} from './common';
         $('#tooltip').hide();
         $('#tooltip .tooltip_closer').hide();
         hideOverlay('_tooltip');
+    }
+
+    const showOverlay = (n, appendto, callback, zIndex) => {
+
+        let div = 'OVERLAY';
+        if (typeof (n) !== 'undefined')
+            div += n;
+        if ($('#' + div).length === 0) {
+            if (typeof (appendto) === 'undefined')
+                appendto = 'body';
+            $(appendto).append('<div id="' + div + '" style="display:none;">&nbsp;</div>');
+        }
+
+        let css = {
+            display: 'block',
+            opacity: 0,
+            right: 0,
+            bottom: 0,
+            position: 'absolute',
+            top: 0,
+            zIndex: zIndex,
+            left: 0
+        };
+
+        if (parseInt(zIndex, 10) > 0)
+            css['zIndex'] = parseInt(zIndex, 10);
+
+        if (typeof (callback) !== 'function')
+            callback = function () {
+            };
+        $('#' + div).css(css).addClass('overlay').fadeTo(500, 0.7).bind('click', function () {
+            (callback)();
+        });
+        if (( navigator.userAgent.match(/msie/i) && navigator.userAgent.match(/6/) )) {
+            $('select').css({
+                visibility: 'hidden'
+            });
+        }
+    }
+
+    const hideOverlay = (n) => {
+        if (( navigator.userAgent.match(/msie/i) && navigator.userAgent.match(/6/) )) {
+            $('select').css({
+                visibility: 'visible'
+            });
+        }
+        let div = 'OVERLAY';
+        if (typeof (n) !== 'undefined')
+            div += n;
+        $('#' + div).hide().remove();
     }
 
     return {
