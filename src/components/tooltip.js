@@ -243,7 +243,6 @@
             helper.url.html($(this).url().replace('http://', '')).show();
         else
             helper.url.hide();
-        console.log('$(this)', $(this))
         // add an optional class for this tip
         helper.parent.removeClass();
         helper.parent.addClass(settings(this).extraClass);

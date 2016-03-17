@@ -40,18 +40,12 @@ import dialog from './dialog';
 let cookie = require('js-cookie');
 
 const initialize = () => {
-    console.log('init common module')
-
     // $(document).ready(function () {
 
     let locale = cookie.get('i18next');
     if (locale === undefined) {
         locale = 'en-GB';
     }
-
-    $('body').on('click', '.infoDialog', function (event) {
-        _infoDialog($(this));
-    });
 
     let cache = $('#mainMenu .helpcontextmenu');
     $('.context-menu-item', cache).hover(function () {
@@ -60,26 +54,6 @@ const initialize = () => {
         $(this).removeClass('context-menu-item-hover');
     });
 };
-
-function _infoDialog(el) {
-    $('#DIALOG').attr('title', '')
-        .empty()
-        .append(el.attr('infos'))
-        .dialog({
-
-            autoOpen: false,
-            closeOnEscape: true,
-            resizable: false,
-            draggable: false,
-            width: 600,
-            height: 400,
-            modal: true,
-            overlay: {
-                backgroundColor: '#000',
-                opacity: 0.7
-            }
-        }).dialog('open').css({'overflow-x': 'auto', 'overflow-y': 'auto'});
-}
 
 function showOverlay(n, appendto, callback, zIndex) {
 

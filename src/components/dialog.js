@@ -173,7 +173,6 @@ const PhraseaDialog = function (services, options, level) {
             width: width,
             height: height,
             open: (event) => {
-                console.log('open dialog', this.zIndex, this.level);
                 const $dialogEl = $(event.currentTarget);
                 //$(this)
                 $dialogEl.dialog('widget').css('z-index', this.zIndex);
@@ -240,7 +239,6 @@ PhraseaDialog.prototype = {
         this.load(this.loader.url, this.loader.method, this.loader.params);
     },
     getDomElement: function () {
-        console.log('get dom')
         return this.$dialog;
     },
     getOption: function (optionName) {

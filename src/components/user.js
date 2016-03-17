@@ -13,8 +13,6 @@ function setPref(name, value) {
         $.data[prefName].abort();
         $.data[prefName] = false;
     }
-    console.log('humaneaaaaaaaaa', humane);
-
     $.data[prefName] = $.ajax({
         type: 'POST',
         url: '/user/preferences/',
