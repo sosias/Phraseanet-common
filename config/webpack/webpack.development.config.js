@@ -109,8 +109,12 @@ module.exports = {
         })
     ],
     externals: {
-        jquery: 'jQuery',
-        humane: 'humane'
+        'jquery': {
+            root: '$',
+            commonjs2: 'jquery',
+            commonjs: 'jquery',
+            amd: 'jquery'
+        }
     },
     eslint: {
         configFile: config.eslintDir
