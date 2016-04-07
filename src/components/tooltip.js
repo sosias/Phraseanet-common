@@ -605,8 +605,8 @@
         event.cancelBubble = true;
         if (event.stopPropagation)
             event.stopPropagation();
-        showOverlay('_tooltip', 'body', tooltipModule.unfixTooltip, settings(this).fixableIndex);
-        $('#tooltip .tooltip_closer').show().bind('click', tooltipModule.unfixTooltip);
+        showOverlay('_tooltip', 'body', unfixTooltip, settings(this).fixableIndex);
+        $('#tooltip .tooltip_closer').show().bind('click', unfixTooltip);
         $.tooltip.blocked = true;
     }
 
