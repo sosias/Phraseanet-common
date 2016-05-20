@@ -272,7 +272,7 @@
         helper.body.show();
         let $this = $.tooltip.current;
         let tooltipSettings = settings($this) ? settings($this) : {};
-        let fixedPosition = tooltipSettings.fixable ? tooltipSettings.fixable : false;
+        let fixedPosition = $.tooltip.blocked;
         // fix PNG background for IE
         if (tooltipSettings.fixPNG)
             helper.parent.fixPNG();
@@ -401,8 +401,8 @@
 
                 if ($eventTarget.length > 0) {
                     // tooltip from records answer
-                    recordWidthOffset = 148; // remove size
-                    recordHeightOffset = 195;
+                    recordWidthOffset = $eventTarget.width()-2; // remove width with margin/2
+                    recordHeightOffset = $eventTarget.height()+2; // remove height with margin/2
                     // change offsets:
                     topOffset = 14;
                     leftOffset = 1;
@@ -608,6 +608,7 @@
         showOverlay('_tooltip', 'body', unfixTooltip, settings(this).fixableIndex);
         $('#tooltip .tooltip_closer').show().bind('click', unfixTooltip);
         $.tooltip.blocked = true;
+        positioning.apply(this, arguments);
     }
 
     function visible() {
