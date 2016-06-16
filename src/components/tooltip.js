@@ -28,7 +28,7 @@
 /* eslint-disable default-case*/
 /* eslint-disable one-var*/
 /* eslint-disable semi*/
-
+let pym = require('pym.js');
 /*
  * jQuery Tooltip plugin 1.3
  *
@@ -52,7 +52,7 @@
         }
     });
 
-
+    let activeThumbnailFrame;
     // the tooltip element
     let helper = {},
     // the title of the current element, used for restoring
@@ -305,7 +305,6 @@
             let leftOffset = 0;
             let rightOffset = 0;
             let bottomOffset = 0;
-
             let $selector = $defaultTips;
 
             if ($imgTips[0] && shouldResize) {
@@ -316,20 +315,27 @@
             }
 
             else if ($documentTips[0] && shouldResize) {
+                let recordUrl = $documentTips.data('src');
                 recordWidth = $documentTips.data('original-width');
                 recordHeight = $documentTips.data('original-height');
                 $documentTips.css({display: 'block', margin: '0 auto'});
                 $selector = $documentTips;
+                activeThumbnailFrame = new pym.Parent('phraseanet-embed-frame', recordUrl);
+                activeThumbnailFrame.iframe.setAttribute('allowfullscreen', '');
             }
 
             else if ($audioTips[0] && shouldResize) {
+                let recordUrl = $audioTips.data('src');
                 recordWidth = 240;
                 recordHeight = 240;
                 $audioTips.css({display: 'block', margin: '0 auto'});
                 $selector = $audioTips;
+                activeThumbnailFrame = new pym.Parent('phraseanet-embed-frame', recordUrl);
+                activeThumbnailFrame.iframe.setAttribute('allowfullscreen', '');
             }
 
             else if ($videoTips[0] && shouldResize) {
+                let recordUrl = $videoTips.data('src');
                 recordWidth = $videoTips.data('original-width');
                 recordHeight = $videoTips.data('original-height');
                 // limit video to maxWidth:
@@ -340,6 +346,9 @@
                  }*/
                 $videoTips.css({display: 'block', margin: '0 auto'});
                 $selector = $videoTips;
+                activeThumbnailFrame = new pym.Parent('phraseanet-embed-frame', recordUrl);
+                activeThumbnailFrame.iframe.setAttribute('allowfullscreen', '');
+
             }
             else {
                 // handle captions
@@ -401,8 +410,8 @@
 
                 if ($eventTarget.length > 0) {
                     // tooltip from records answer
-                    recordWidthOffset = $eventTarget.width()-2; // remove width with margin/2
-                    recordHeightOffset = $eventTarget.height()+2; // remove height with margin/2
+                    recordWidthOffset = $eventTarget.width() - 2; // remove width with margin/2
+                    recordHeightOffset = $eventTarget.height() + 2; // remove height with margin/2
                     // change offsets:
                     topOffset = 14;
                     leftOffset = 1;
@@ -552,7 +561,6 @@
 
                 resizeProperties['width'] = shouldResize ? Math.round(tooltipWidth) : 'auto';
                 resizeProperties['height'] = shouldResize ? Math.round(tooltipHeight) : 'auto';
-
 
                 helper.parent.css(resizeProperties);
             }
