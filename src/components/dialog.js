@@ -133,6 +133,10 @@ const PhraseaDialog = function (services, options, level) {
                 width = Math.min(bodySize.x - 30, 300);
                 height = Math.min(bodySize.y - 30, 150);
                 break;
+            case 'Custom':
+                width = Math.min(bodySize.x - 30, this.options.customWidth);
+                height = Math.min(bodySize.y - 30, this.options.customHeight);
+                break;
         }
     }
 
