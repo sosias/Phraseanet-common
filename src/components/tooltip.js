@@ -281,6 +281,9 @@ let pym = require('pym.js');
             let height = 'auto';
             let tooltipId = tooltipSettings.id;
             let $defaultTips = $('#' + tooltipId);
+            let customId = 'phraseanet-embed-tooltip-frame';
+            $defaultTips.find('#phraseanet-embed-frame').attr('id', customId);
+
             let $audioTips = $('#' + tooltipId + ' .audioTips');
             let $imgTips = $('#' + tooltipId + ' .imgTips');
             let $videoTips = $('#' + tooltipId + ' .videoTips');
@@ -320,7 +323,7 @@ let pym = require('pym.js');
                 recordHeight = $documentTips.data('original-height');
                 $documentTips.css({display: 'block', margin: '0 auto'});
                 $selector = $documentTips;
-                activeThumbnailFrame = new pym.Parent('phraseanet-embed-frame', recordUrl);
+                activeThumbnailFrame = new pym.Parent(customId, recordUrl);
                 activeThumbnailFrame.iframe.setAttribute('allowfullscreen', '');
             }
 
@@ -330,7 +333,7 @@ let pym = require('pym.js');
                 recordHeight = 240;
                 $audioTips.css({display: 'block', margin: '0 auto'});
                 $selector = $audioTips;
-                activeThumbnailFrame = new pym.Parent('phraseanet-embed-frame', recordUrl);
+                activeThumbnailFrame = new pym.Parent(customId, recordUrl);
                 activeThumbnailFrame.iframe.setAttribute('allowfullscreen', '');
             }
 
@@ -346,7 +349,7 @@ let pym = require('pym.js');
                  }*/
                 $videoTips.css({display: 'block', margin: '0 auto'});
                 $selector = $videoTips;
-                activeThumbnailFrame = new pym.Parent('phraseanet-embed-frame', recordUrl);
+                activeThumbnailFrame = new pym.Parent(customId, recordUrl);
                 activeThumbnailFrame.iframe.setAttribute('allowfullscreen', '');
 
             }
