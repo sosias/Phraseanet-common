@@ -2,7 +2,7 @@ const _root = __dirname + '/../';
 
 module.exports = {
 
-    // path helpers	
+    // path helpers
     _app: 'common',
     minified: 'common.min.js',
     dev: 'common.js',

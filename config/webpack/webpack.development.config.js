@@ -64,7 +64,6 @@ module.exports = {
     // entry points 
     entry: config.sourceDir,
     cache: true,
-    debug: true,
     watch: true,
     devtool: 'eval',
     output: {
@@ -74,24 +73,27 @@ module.exports = {
         library: config._app
     },
     module: {
-        preLoaders: [{
-            test: /\.js$/,
-            loader: 'eslint-loader',
-            exclude: /node_modules/
-        }],
-        loaders: [{
-            test: /[\/\\]src[\/\\]vendors[\/\\]jquery\.contextmenu_custom\.js$/,
-            loader: "imports?define=>false"
-        },
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                include: path.join(__dirname, '../../src'),
-                loader: 'babel-loader'
-            }]
+        rules: [
+          {
+              test: /\.js$/,
+              enforce: 'pre',
+              loader: 'eslint-loader',
+              exclude: /node_modules/
+          },
+          {
+              test: /[\/\\]src[\/\\]vendors[\/\\]jquery\.contextmenu_custom\.js$/,
+              use: "imports-loader?define=>false"
+          },
+          {
+              test: /\.js$/,
+              exclude: /node_modules/,
+              include: path.join(__dirname, '../../src'),
+              use: 'babel-loader'
+          }
+        ]
     },
     resolve: {
-        extensions: ['', '.js'],
+        extensions: ['*', '.js'],
         alias: {
             'jquery-contextmenu': path.join(__dirname, '../../src/vendors/jquery.contextmenu_custom.js')
         }
@@ -100,13 +102,20 @@ module.exports = {
         new WebpackNotifierPlugin({
             alwaysNotify: true
         }),
-        new webpack.optimize.OccurenceOrderPlugin(),
         // new webpack.BannerPlugin(banner),
         new webpack.DefinePlugin({
             '__DEV__': true,
             'process.env.NODE_ENV': JSON.stringify('development'),
             VERSION: JSON.stringify(pkg.version)
-        })
+        }),
+        new webpack.LoaderOptionsPlugin({
+           debug: true,
+           options: {
+            eslint: {
+              configFile: config.eslintDir
+            }
+          }
+        }),
     ],
     externals: {
         'jquery': {
@@ -115,8 +124,5 @@ module.exports = {
             commonjs: 'jquery',
             amd: 'jquery'
         }
-    },
-    eslint: {
-        configFile: config.eslintDir
     }
 };

@@ -5,28 +5,34 @@ import config from '../config';
 
 module.exports = {
     cache: true,
-    debug: true,
-    hot:false,
     output: {},
-	entry: {},
     module: {
-		postLoaders: [{
-            test: /\.js$/,
-            include: path.resolve('src/'),
-            loader: 'istanbul-instrumenter'
-        }],
-        loaders: [{
-            test: /\.js?$/,
-            exclude: /node_modules/,
-            loaders: ['babel-loader']
-        }]
+  		rules: [{
+              test: /\.js$/,
+              enforce: 'post',
+              include: path.resolve('src/'),
+              loader: 'istanbul-instrumenter-loader'
+          },
+          {
+              test: /\.js?$/,
+              exclude: /node_modules/,
+              use: ['babel-loader']
+          }
+        ]
     },
     resolve: {
-        extensions: ['', '.js']
+        extensions: ['*', '.js']
     },
     externals: {
         jquery: 'jQuery',
         humane: 'humane'
     },
-    plugins: []
+    plugins: [
+      new webpack.LoaderOptionsPlugin({
+          debug: true
+      }),
+    ],
+    devServer: {
+       hot: true
+    }
 };

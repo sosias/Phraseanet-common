@@ -12,10 +12,7 @@ const webpackConfig = require('./webpack.development.config')
 module.exports = Object.assign({}, webpackConfig, {
 
     cache: false,
-    debug: false,
     devtool: false,
-    hot: false,
-    build: true,
     watch: false,
     output: {
         path: config.distDir,
@@ -33,9 +30,6 @@ module.exports = Object.assign({}, webpackConfig, {
             title: PKG_LOCATION.name,
             alwaysNotify: true
         }),
-        // optimizations
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
         // new webpack.NoErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             output: {
@@ -52,6 +46,12 @@ module.exports = Object.assign({}, webpackConfig, {
             '__DEV__': false,
             'process.env.NODE_ENV': JSON.stringify('production'),
             VERSION: JSON.stringify(PKG_LOCATION.version)
-        })
-    ]
+        }),
+        new webpack.LoaderOptionsPlugin({
+            debug: true
+        }),
+    ],
+    devServer: {
+        hot: true
+    }
 });
