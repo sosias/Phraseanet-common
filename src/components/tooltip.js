@@ -368,9 +368,13 @@ let pym = require('pym.js');
                 activeThumbnailFrame.iframe.setAttribute('allowfullscreen', '');
             } else {
                 // handle captions
-                recordWidth =
-                    parseInt($selector.find('.popover')[0].style.width, 10) ||
-                    recordWidth;
+                if ($selector.find('popover').length > 0) {
+                    recordWidth =
+                        parseInt(
+                            $selector.find('.popover')[0].style.width,
+                            10
+                        ) || recordWidth;
+                }
                 var contentHeight = $selector.height();
                 shouldResize = false;
                 tooltipVerticalOffset = 13;
@@ -740,9 +744,14 @@ let pym = require('pym.js');
     }
 
     function fix(event) {
-        if (!settings(this).fixable) {
-            hide(event);
+        if (!$.tooltip.current) {
             return;
+        }
+        if (!$(this).hasClass('captionTips') || !event.altKey) {
+            if (!settings(this).fixable) {
+                hide(event);
+                return;
+            }
         }
         event.cancelBubble = true;
         if (event.stopPropagation) event.stopPropagation();
