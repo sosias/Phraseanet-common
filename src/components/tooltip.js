@@ -368,7 +368,7 @@ let pym = require('pym.js');
                 activeThumbnailFrame.iframe.setAttribute('allowfullscreen', '');
             } else {
                 // handle captions
-                if ($selector.find('popover').length > 0) {
+                if ($selector.find('.popover').length > 0) {
                     recordWidth =
                         parseInt(
                             $selector.find('.popover')[0].style.width,
