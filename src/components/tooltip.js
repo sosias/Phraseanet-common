@@ -366,7 +366,7 @@ let pym = require('pym.js');
                 $selector = $videoTips;
                 activeThumbnailFrame = new pym.Parent(customId, recordUrl);
                 activeThumbnailFrame.iframe.setAttribute('allowfullscreen', '');
-                activeThumbnailFrame.iframe.setAttribute('height', '100%');
+                //activeThumbnailFrame.iframe.setAttribute('height', '100%');
             } else {
                 // handle captions
                 if ($selector.find('.popover').length > 0) {
