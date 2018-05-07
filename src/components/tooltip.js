@@ -52,6 +52,10 @@ let pym = require('pym.js');
         }
     });
 
+    $(document).on('click', function(){
+        $('#tooltip').hide();
+    })
+
     let activeThumbnailFrame;
     // the tooltip element
     let helper = {},
@@ -860,44 +864,46 @@ let pym = require('pym.js');
 
     // hide helper and restore added classes and the title
     function hide(event) {
-        let isBrowsable = false;
-        if ($.tooltip.current !== null) {
-            isBrowsable = settings($.tooltip.current).isBrowsable;
+        if (!$('#tooltip').is(':hover')) {
+            let isBrowsable = false;
+            if ($.tooltip.current !== null) {
+                isBrowsable = settings($.tooltip.current).isBrowsable;
+            }
+            if ($.tooltip.currentHover && isBrowsable) {
+                return;
+            }
+
+            if ($.tooltip.blocked || !$.tooltip.current) return;
+
+            $(helper.parent[0]).unbind('mouseenter').unbind('mouseleave');
+
+            // clear timeout if possible
+            if (tID) clearTimeout(tID);
+            // no more current element
+            $.tooltip.visible = false;
+            let tsettings = settings($.tooltip.current);
+            clearTimeout($.tooltip.ajaxTimeout);
+            if ($.tooltip.ajaxRequest && $.tooltip.ajaxRequest.abort) {
+                $.tooltip.ajaxRequest.abort();
+            }
+
+            helper.body.empty();
+            $.tooltip.current = null;
+            function complete() {
+                helper.parent
+                    .removeClass(tsettings.extraClass)
+                    .hide()
+                    .css('opacity', '');
+            }
+
+            if ((!IE || !$.fn.bgiframe) && tsettings.fade) {
+                if (helper.parent.is(':animated'))
+                    helper.parent.stop().fadeTo(tsettings.fade, 0, complete);
+                else helper.parent.stop().fadeOut(tsettings.fade, complete);
+            } else complete();
+
+            if (tsettings.fixPNG) helper.parent.unfixPNG();
         }
-        if ($.tooltip.currentHover && isBrowsable) {
-            return;
-        }
-
-        if ($.tooltip.blocked || !$.tooltip.current) return;
-
-        $(helper.parent[0]).unbind('mouseenter').unbind('mouseleave');
-
-        // clear timeout if possible
-        if (tID) clearTimeout(tID);
-        // no more current element
-        $.tooltip.visible = false;
-        let tsettings = settings($.tooltip.current);
-        clearTimeout($.tooltip.ajaxTimeout);
-        if ($.tooltip.ajaxRequest && $.tooltip.ajaxRequest.abort) {
-            $.tooltip.ajaxRequest.abort();
-        }
-
-        helper.body.empty();
-        $.tooltip.current = null;
-        function complete() {
-            helper.parent
-                .removeClass(tsettings.extraClass)
-                .hide()
-                .css('opacity', '');
-        }
-
-        if ((!IE || !$.fn.bgiframe) && tsettings.fade) {
-            if (helper.parent.is(':animated'))
-                helper.parent.stop().fadeTo(tsettings.fade, 0, complete);
-            else helper.parent.stop().fadeOut(tsettings.fade, complete);
-        } else complete();
-
-        if (tsettings.fixPNG) helper.parent.unfixPNG();
     }
 
     function unfixTooltip() {
